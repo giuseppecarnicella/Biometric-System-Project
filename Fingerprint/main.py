@@ -12,6 +12,7 @@ def extract_kaze_descriptors(image_path):
     :return: Lista di descrittori KAZE
     """
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+    
     if image is None:
         raise ValueError(f"Impossibile aprire l'immagine: {image_path}")
 
@@ -50,7 +51,7 @@ def process_images_in_directory(directory_path):
 
             image_path = os.path.join(directory_path, filename)
             print(f"Elaborazione di: {image_path}")
-            if int(subject_id)>56:
+            if int(subject_id)>46:
                 print("Skipping user: ",subject_id)
                 continue
             if finger_type != "Right_thumb_finger":
@@ -64,6 +65,8 @@ def process_images_in_directory(directory_path):
                         subject_data[subject_id]["sesso"] = sex
                     if finger_type not in subject_data[subject_id]:
                         subject_data[subject_id][finger_type] = []
+                    else:
+                        continue
                     subject_data[subject_id][finger_type].extend(descriptors_list)
             except ValueError as e:
                 print(e)
@@ -74,5 +77,5 @@ def process_images_in_directory(directory_path):
     print(f"Descrittori salvati per tutti i soggetti in {output_path}")
 
 if __name__ == "__main__":
-    path = "./archive/SOCOFing/Real"#input("Inserisci il path della directory contenente le immagini: ")
+    path = "./SOCOFing/Real"#input("Inserisci il path della directory contenente le immagini: ")
     process_images_in_directory(path)
