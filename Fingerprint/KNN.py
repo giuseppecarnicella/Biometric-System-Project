@@ -13,6 +13,7 @@ from sklearn.model_selection import cross_val_score
 from scipy.spatial.distance import euclidean, cityblock
 import pickle
 
+
 plt.style.use('ggplot')
 
 # %%
