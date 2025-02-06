@@ -64,7 +64,7 @@ def load_data(file_name, col_to_remove):
     return data, df['subject'].values, data_imposter, df2['subject'].values
 
 
-def calculate_KMeans(data, y):
+def calculate_KNN(data, y):
     """
     Funzione che addestra il modello KNN su tutti i dati e restituisce il modello addestrato.
     """
@@ -141,8 +141,6 @@ def identificate_all():
         knn_model = pickle.load(f)
 
     return identify_user(knn_model, X_test)
-    
-
 
 
 
@@ -172,8 +170,9 @@ def metrics(knn_model, data_imposter, X_test):
     print('FRR:',1-gen_acc/gen_total)
     print('FAR:',imp_acc/imp_total)
     print('TRR:',1-imp_acc/imp_total)
-
-
-
-
+'''
+data, y,data_imposter,y_imposter=load_data(DATASET_2, ['subject', 'sessionIndex', 'rep'])
+model,X_test,Y_test = calculate_KMeans(data, y)
+metrics(model, data_imposter, X_test)
+'''
 

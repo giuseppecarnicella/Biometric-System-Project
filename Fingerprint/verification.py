@@ -77,7 +77,7 @@ def FPmatching(FP_database, fingerprint, id):
     return matching_scores
 
 
-    
+
 
 
 if __name__ == '__main__':
@@ -102,11 +102,11 @@ if __name__ == '__main__':
 
 def test():
 
-    mypathreal = "./SOCOFing/Real/"
+    #mypathreal = "./SOCOFing/Real/"
     mypathhard = "./SOCOFing/Altered/Altered-Hard/"
     mypathmedium = "./SOCOFing/Altered/Altered-Medium/"
     mypatheasy = "./SOCOFing/Altered/Altered-Easy/"
-    listpath = [mypathreal,mypathhard, mypathmedium, mypatheasy]
+    listpath = [mypathhard, mypathmedium, mypatheasy]
     
     
     
@@ -134,7 +134,7 @@ def test():
 
         #print(medium_scores)
         total_gen = len(medium_scores)
-        genuine = sum(1 for score in medium_scores if score >= 5)
+        genuine = sum(1 for score in medium_scores if score >= 3)
         print('GAR '+mypath+' ',genuine/total_gen)
         print('FRR '+mypath+' ',1-genuine/total_gen)
 
@@ -161,7 +161,7 @@ def test():
                     print("Impossibile effettuare il matching.")
         
         total_imp = len(imposter_scores)
-        imposters = sum(1 for score in imposter_scores if score >= 5)
+        imposters = sum(1 for score in imposter_scores if score >= 3)
         #print(imposter_scores)
         
         print('FAR '+mypath+' ',imposters/total_imp)
@@ -239,7 +239,7 @@ def compute_roc_curve_altered():
     plt.grid()
     plt.show()
 
-compute_roc_curve_altered()
+
 
 
 
