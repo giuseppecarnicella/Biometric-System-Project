@@ -8,13 +8,9 @@ from os import listdir
 from os.path import isfile, join
 
 
+# Estrai descrittori KAZE da un'immagine specificata.
 def extract_kaze_descriptors(image_path):
-    """
-    Estrai descrittori KAZE da un'immagine specificata.
 
-    :param image_path: Path dell'immagine
-    :return: Lista di descrittori KAZE
-    """
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     if image is None:
         raise ValueError(f"Impossibile aprire l'immagine: {image_path}")
@@ -27,15 +23,10 @@ def extract_kaze_descriptors(image_path):
     return np.array(descriptors)
 
 
-def match_descriptors(descriptors1, descriptors2, ratio_threshold=0.6):
-    """
-    Confronta due set di descrittori utilizzando il Brute-Force Matcher.
 
-    :param descriptors1: Primo set di descrittori
-    :param descriptors2: Secondo set di descrittori
-    :param ratio_threshold: Soglia di ratio per il test di Lowe
-    :return: Lista di corrispondenze valide
-    """
+# Confronta due set di descrittori utilizzando il Brute-Force Matcher.
+def match_descriptors(descriptors1, descriptors2, ratio_threshold=0.6):
+    
     bf = cv2.BFMatcher(cv2.NORM_L2)
     matches = bf.knnMatch(descriptors1, descriptors2, k=2)
 
@@ -49,6 +40,8 @@ def match_descriptors(descriptors1, descriptors2, ratio_threshold=0.6):
     
     return good_matches
 
+
+# Esegue il matching tra i descrittori dell'immagine esterna e quelli salvati nel database.
 def FPmatching(FP_database, fingerprint, id):
 
     FP_descriptors = extract_kaze_descriptors(fingerprint)
@@ -79,27 +72,6 @@ def FPmatching(FP_database, fingerprint, id):
 
 
 
-
-if __name__ == '__main__':
-    FP_data = "./all_subjects_descriptors.json"
-    '''
-    fingerprint = "./archive/SOCOFing/Altered/Altered-Hard/1__M_Right_thumb_finger_CR.BMP"
-        #"./archive/SOCOFing/Real/1__M_Right_thumb_finger.BMP"   # Inserisci il path dell'immagine esterna
-    id = "1"  # ID dichiarato dall'immagine esterna
-    matching_results = FPmatching(FP_data, fingerprint, id)
-
-    if matching_results:
-        print(f"Risultati del matching per l'ID dichiarato {id}:")
-        for finger_type, score in matching_results.items():
-            print(f"- {finger_type}: {score} corrispondenze valide")
-    else:
-        print("Impossibile effettuare il matching.")
-    '''
-
-    
-
-
-
 def test():
 
     #mypathreal = "./SOCOFing/Real/"
@@ -107,7 +79,7 @@ def test():
     mypathmedium = "./SOCOFing/Altered/Altered-Medium/"
     mypatheasy = "./SOCOFing/Altered/Altered-Easy/"
     listpath = [mypathhard, mypathmedium, mypatheasy]
-    
+    FP_data = "./all_subjects_descriptors.json"
     
     
 
@@ -242,4 +214,19 @@ def compute_roc_curve_altered():
 
 
 
+if __name__ == '__main__':
+    '''
+    FP_data = "./all_subjects_descriptors.json"
+    
+    fingerprint = "./archive/SOCOFing/Altered/Altered-Hard/1__M_Right_thumb_finger_CR.BMP"
+        #"./archive/SOCOFing/Real/1__M_Right_thumb_finger.BMP"   # Inserisci il path dell'immagine esterna
+    id = "1"  # ID dichiarato dall'immagine esterna
+    matching_results = FPmatching(FP_data, fingerprint, id)
 
+    if matching_results:
+        print(f"Risultati del matching per l'ID dichiarato {id}:")
+        for finger_type, score in matching_results.items():
+            print(f"- {finger_type}: {score} corrispondenze valide")
+    else:
+        print("Impossibile effettuare il matching.")
+    '''

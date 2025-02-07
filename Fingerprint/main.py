@@ -4,13 +4,10 @@ import json
 from collections import defaultdict
 import numpy as np
 
-def extract_kaze_descriptors(image_path):
-    """
-    Estrai descrittori KAZE da un'immagine specificata.
 
-    :param image_path: Path dell'immagine
-    :return: Lista di descrittori KAZE
-    """
+#Estrai descrittori KAZE da un'immagine specificata.
+def extract_kaze_descriptors(image_path):
+  
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     
     if image is None:
@@ -23,23 +20,17 @@ def extract_kaze_descriptors(image_path):
 
     return np.array(descriptors)
 
-def save_descriptors_to_json(subject_data, output_path):
-    """
-    Salva i descrittori in un file JSON unico.
 
-    :param subject_data: Dizionario con i descrittori organizzati per soggetto e tipo di dito
-    :param output_path: Path del file JSON
-    """
+#Salva i descrittori in un file JSON unico.
+def save_descriptors_to_json(subject_data, output_path):
+
     with open(output_path, 'w') as json_file:
         json.dump(subject_data, json_file, indent=4)
 
-def process_images_in_directory(directory_path):
-    """
-    Elabora tutte le immagini in una directory specificata, estrae i descrittori KAZE
-    e li salva in un singolo file JSON con struttura specifica.
 
-    :param directory_path: Path della directory con le immagini
-    """
+#Elabora tutte le immagini in una directory specificata, estrae i descrittori KAZE e li salva in un singolo file JSON con struttura specifica.
+def process_images_in_directory(directory_path):
+
     subject_data = defaultdict(lambda: {"sesso": None})
 
     for filename in os.listdir(directory_path):
@@ -50,7 +41,7 @@ def process_images_in_directory(directory_path):
             sex, finger_type = sex_finger.split('_', 1)
 
             image_path = os.path.join(directory_path, filename)
-            print(f"Elaborazione di: {image_path}")
+            print(f"Elaboration of: {image_path}")
             if int(subject_id)>46:
                 print("Skipping user: ",subject_id)
                 continue
@@ -60,7 +51,7 @@ def process_images_in_directory(directory_path):
             try:
                 descriptors = extract_kaze_descriptors(image_path)
                 if descriptors is not None:
-                    descriptors_list = descriptors.tolist()  # Convert to list for JSON serialization
+                    descriptors_list = descriptors.tolist() 
                     if subject_data[subject_id]["sesso"] is None:
                         subject_data[subject_id]["sesso"] = sex
                     if finger_type not in subject_data[subject_id]:

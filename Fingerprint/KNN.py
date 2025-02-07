@@ -4,13 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
-from scipy.optimize import brentq
-from scipy.interpolate import interp1d
-from sklearn.metrics import accuracy_score, roc_curve, auc
 from sklearn.decomposition import PCA
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import cross_val_score
-from scipy.spatial.distance import euclidean, cityblock
+
 import pickle
 
 
@@ -64,10 +60,10 @@ def load_data(file_name, col_to_remove):
     return data, df['subject'].values, data_imposter, df2['subject'].values
 
 
+
+# Funzione che addestra il modello KNN su tutti i dati e restituisce il modello addestrato.
 def calculate_KNN(data, y):
-    """
-    Funzione che addestra il modello KNN su tutti i dati e restituisce il modello addestrato.
-    """
+    
     X = data['total']
     X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.2, random_state=1, stratify=y)
     
@@ -81,35 +77,20 @@ def calculate_KNN(data, y):
     # Ottieni il miglior modello KNN
     best_model = grid.best_estimator_
 
-    # Predizioni per valutazione ---> restituisce il soggetto predetto
-    Y_pred = grid.predict(X_test)
-    
-
     return best_model, X_test, Y_test
 
 
-
+# Funzione per dividere i dati in training e testing set.
 def split_data(data, y):
-    """
-    Funzione per dividere i dati in training e testing set.
-    """
+
     X = data['total']
     _, X_test, _, Y_test = train_test_split(X, y, test_size=0.2, random_state=1, stratify=y)
     return X_test, Y_test
 
 
-def identify_user(model, samples ,threshold=0.5):
-    """
-    Identifica il soggetto a partire da un campione dato.
-    
-    Parameters:
-    - model: modello KNN allenato.
-    - sample: array con le metriche di keystroke dell'utente (1xN).
-    
-    Returns:
-    - Predizione del soggetto più simile.
-    """
 
+# Identifica il soggetto a partire da un campione dato.
+def identify_user(model, samples ,threshold=0.5):
     
     subject = model.predict(samples)  # Predice il soggetto
    
@@ -129,11 +110,6 @@ def identificate_all():
 
     data, y,data_imposter,y_imposter = load_data(DATASET_2, ['subject', 'sessionIndex', 'rep'])
     Y = pd.get_dummies(y).values
-
-    #eer2_2 = brentq(lambda x : 1. - x - interp1d(fpr2_2, tpr2_2)(x), 0., 1.)
-    # Otteniamo il modello e i dati di testing
-    #knn_model, X_test, Y_test = calculate_KMeans(data, y)
-
     X_test,Y_test = split_data(data, y)
 
     #load
@@ -147,9 +123,8 @@ def identificate_all():
 
 
 
-# %% [markdown]
-# METRICHE
 
+# METRICHE
 def metrics(knn_model, data_imposter, X_test):
     X_imp = data_imposter['total']
 
@@ -170,9 +145,13 @@ def metrics(knn_model, data_imposter, X_test):
     print('FRR:',1-gen_acc/gen_total)
     print('FAR:',imp_acc/imp_total)
     print('TRR:',1-imp_acc/imp_total)
+
 '''
 data, y,data_imposter,y_imposter=load_data(DATASET_2, ['subject', 'sessionIndex', 'rep'])
-model,X_test,Y_test = calculate_KMeans(data, y)
+model,X_test,Y_test = calculate_KNN(data, y)
+with open('model.pkl', 'wb') as f:
+    pickle.dump(model, f)
 metrics(model, data_imposter, X_test)
 '''
+
 
