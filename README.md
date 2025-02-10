@@ -16,7 +16,7 @@ Project made for the Biometrics course @ Sapienza University.
 - python ./GUI.py to runs the demo.
 - python ./final_metrics.py to run the test on the whole system and to get the overall perfomances of it.
 
-KNN.py has a commented section on the buttom. Uncomment it and run python ./KNN.py to test only the KNN section.
+- KNN.py has a commented section on the buttom. Uncomment it and run python ./KNN.py to test only the KNN section.
 
 
 
