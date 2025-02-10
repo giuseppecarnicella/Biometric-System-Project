@@ -9,14 +9,14 @@ Project made for the Biometrics course @ Sapienza University.
 - KNN.py contains all the methods to train and use the KNN identification model.
 - verification.py contains all the methods to use the fingerprint verification model.
 - gallery_features.py contains all the methods to create the fingerprint gallery.
-- GUI.py contain the demo.
+- GUI.py contains the demo.
 
 # How to use
 
-- python ./GUI.py to runs the demo.
+- python ./GUI.py to run the demo.
 - python ./final_metrics.py to run the test on the whole system and to get the overall perfomances of it.
 
-- KNN.py has a commented section on the buttom. Uncomment it and run python ./KNN.py to test only the KNN section.
+- KNN.py has a commented section on the bottom. Uncomment it and run 'python ./KNN.py' to test only the KNN section.
 
 
 # How the demo works
