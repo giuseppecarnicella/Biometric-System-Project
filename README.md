@@ -1,4 +1,4 @@
-# Biometric-System-Project
+# Biometric System Project
 
 A Lightweight Identification System with Keystroke Dynamics and Fingerprint Verification.
 
